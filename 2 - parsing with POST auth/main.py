@@ -1,6 +1,6 @@
 from requests import Session
 from bs4 import BeautifulSoup
-from time import sleep
+# from time import sleep
 
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 YaBrowser/20.9.3.136 Yowser/2.5 Safari/537.36'
@@ -20,16 +20,20 @@ token = soup.find('form').find('input').get('value')
 data = {'csrf_token': token, 'username': 'noname', 'password': 'password'}
 
 result = work.post('https://quotes.toscrape.com/login', headers=headers, data=data, allow_redirects=True)
-print(result)
 
 # work get page/1
 # circle to new page: page/2 page/3 etc
 
-
-result = soup.find_all('span', class_='text')
-author = soup.find_all('small', class_='author')
+"""
+count = 1
+r = work.get(f'https://quotes.toscrape.com/page/{count}/', headers=headers, data=data)
+s = BeautifulSoup(r.text, 'lxml')
+result = s.find_all('span', class_='text')
+authors = s.find_all('small', class_='author')
+print(f'{result}, {authors}')
 
 if len(result) != 0:
-   pass
+    count += 1
 else:
-    break
+    pass
+"""
